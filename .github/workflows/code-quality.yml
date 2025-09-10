@@ -101,13 +101,11 @@ jobs:
           rm -rf dist/
           rm -rf *.egg-info/
 
-          # Ensure egg-info is properly ignored
-          git status --porcelain | grep -v "\.egg-info" | grep -v "__pycache__" > /tmp/git_status_clean.txt
-
-          if [ -s /tmp/git_status_clean.txt ]; then
+          # Check for actual file changes (excluding build artifacts)
+          if git status --porcelain | grep -v -E "(\.egg-info|__pycache__|\.pyc$)" | grep . > /dev/null 2>&1; then
             echo "Files were modified during formatting. \
               Please run 'make format' locally."
-            cat /tmp/git_status_clean.txt
+            git status --porcelain | grep -v -E "(\.egg-info|__pycache__|\.pyc$)"
             exit 1
           else
             echo "All files are properly formatted."
