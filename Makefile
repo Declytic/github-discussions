@@ -31,14 +31,11 @@ format: ## Format code
 	isort github_discussions tests examples
 
 clean: ## Clean up generated files
-	rm -rf build/
-	rm -rf dist/
-	rm -rf *.egg-info/
-	rm -rf .pytest_cache/
-	rm -rf .coverage
-	rm -rf htmlcov/
-	find . -type d -name __pycache__ -exec rm -rf {} +
-	find . -type f -name "*.pyc" -delete
+	python -c "import shutil, os; [shutil.rmtree(d, ignore_errors=True) for d in ['build', 'dist', '.pytest_cache', 'htmlcov'] if os.path.exists(d)]"
+	python -c "import os; [os.remove(f) for f in ['.coverage'] if os.path.exists(f)]"
+	python -c "import shutil, os, glob; [shutil.rmtree(d, ignore_errors=True) for d in glob.glob('*.egg-info')]"
+	python -c "import shutil, os; [shutil.rmtree(os.path.join(root, d), ignore_errors=True) for root, dirs, files in os.walk('.') for d in dirs if d == '__pycache__']"
+	python -c "import os; [os.remove(os.path.join(root, f)) for root, dirs, files in os.walk('.') for f in files if f.endswith('.pyc')]"
 
 build: ## Build the package
 	python -m build

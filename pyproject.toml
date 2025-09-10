@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "github-discussions"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Python package for interacting with GitHub Discussions using GraphQL API"
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -97,6 +97,7 @@ warn_unused_ignores = true
 warn_no_return = true
 warn_unreachable = true
 strict_equality = true
+ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = "tests.*"
