@@ -7,7 +7,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 # Read the contents of pyproject.toml for dependencies
-import tomllib
+try:
+    import tomllib
+except ImportError:
+    import tomli as tomllib
 
 with open("pyproject.toml", "rb") as f:
     pyproject_data = tomllib.load(f)

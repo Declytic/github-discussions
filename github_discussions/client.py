@@ -151,9 +151,7 @@ class GitHubDiscussionsClient(BaseGitHubDiscussionsClient):
         Returns:
             RateLimitStatus object with current rate limit information
         """
-        import asyncio
-
-        return asyncio.run(super().get_rate_limit_status())
+        return super().get_rate_limit_status()
 
     def get_discussions(
         self,
@@ -179,12 +177,8 @@ class GitHubDiscussionsClient(BaseGitHubDiscussionsClient):
         Returns:
             DiscussionsResponse with discussions and pagination info
         """
-        import asyncio
-
-        return asyncio.run(
-            super().get_discussions(
-                owner, repo, first, after, category_id, answered, order_by
-            )
+        return super().get_discussions(
+            owner, repo, first, after, category_id, answered, order_by
         )
 
     def get_discussion(self, owner: str, repo: str, number: int) -> Discussion:
@@ -198,9 +192,7 @@ class GitHubDiscussionsClient(BaseGitHubDiscussionsClient):
         Returns:
             Discussion object
         """
-        import asyncio
-
-        return asyncio.run(super().get_discussion(owner, repo, number))
+        return super().get_discussion(owner, repo, number)
 
     def create_discussion(
         self,
@@ -222,12 +214,8 @@ class GitHubDiscussionsClient(BaseGitHubDiscussionsClient):
         Returns:
             Created Discussion object
         """
-        import asyncio
-
-        return asyncio.run(
-            super().create_discussion(
-                repository_id, category_id, title, body, client_mutation_id
-            )
+        return super().create_discussion(
+            repository_id, category_id, title, body, client_mutation_id
         )
 
     def get_discussion_comments(

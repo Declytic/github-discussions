@@ -298,8 +298,8 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ```bash
 # Clone the repository
-git clone https://github.com/Declytic/github-discussions-graphql.git
-cd github-discussions-graphql
+git clone https://github.com/Declytic/github-discussions.git
+cd github-discussions
 
 # Install dependencies
 pip install -e ".[dev]"
@@ -401,9 +401,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-- 📚 [Documentation](https://github.com/Declytic/github-discussions-graphql/docs/)
-- 🐛 [Issue Tracker](https://github.com/Declytic/github-discussions-graphql/issues)
-- 💬 [Discussions](https://github.com/Declytic/github-discussions-graphql/discussions)
+- 📚 [Documentation](https://github.com/Declytic/github-discussions/docs/)
+- 🐛 [Issue Tracker](https://github.com/Declytic/github-discussions/issues)
+- 💬 [Discussions](https://github.com/Declytic/github-discussions/discussions)
 
 ## Changelog
 

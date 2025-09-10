@@ -36,7 +36,7 @@ jobs:
 
       - name: Check code formatting with Black
         run: |
-          black --check --diff github_discussions tests examples
+          python -m black --check --diff github_discussions tests examples
 
       - name: Check import sorting with isort
         run: |
@@ -44,7 +44,7 @@ jobs:
 
       - name: Lint with flake8
         run: |
-          flake8 github_discussions tests examples
+          flake8 --max-line-length=88 --extend-ignore=E203,W503 github_discussions tests examples
 
       - name: Type check with mypy
         run: |
@@ -85,7 +85,7 @@ jobs:
 
       - name: Format code with Black
         run: |
-          black github_discussions tests examples
+          python -m black github_discussions tests examples
 
       - name: Sort imports with isort
         run: |
@@ -94,10 +94,21 @@ jobs:
       - name: Check if files were modified
         id: verify-changed-files
         run: |
-          if [ -n "$(git status --porcelain)" ]; then
+          # Clean up any generated files that should be ignored
+          rm -rf github_discussions.egg-info/
+          rm -rf github_discussions/github_discussions.egg-info/
+          rm -rf build/
+          rm -rf dist/
+          rm -rf *.egg-info/
+
+          # Check for actual file changes (excluding build artifacts)
+          if git status --porcelain | \
+            grep -v -E "(\.egg-info|__pycache__|\.pyc$)" | \
+            grep . > /dev/null 2>&1; then
             echo "Files were modified during formatting. \
               Please run 'make format' locally."
-            git status --porcelain
+            git status --porcelain | \
+              grep -v -E "(\.egg-info|__pycache__|\.pyc$)"
             exit 1
           else
             echo "All files are properly formatted."
