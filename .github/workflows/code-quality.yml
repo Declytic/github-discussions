@@ -33,10 +33,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
+          rm github_discussions/github_discussions.egg-info/ -rf
 
       - name: Check code formatting with Black
         run: |
-          black --check --diff github_discussions tests examples
+          python -m black --check --diff github_discussions tests examples
 
       - name: Check import sorting with isort
         run: |
@@ -85,7 +86,7 @@ jobs:
 
       - name: Format code with Black
         run: |
-          black github_discussions tests examples
+          python -m black github_discussions tests examples
 
       - name: Sort imports with isort
         run: |
