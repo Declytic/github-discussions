@@ -102,10 +102,13 @@ jobs:
           rm -rf *.egg-info/
 
           # Check for actual file changes (excluding build artifacts)
-          if git status --porcelain | grep -v -E "(\.egg-info|__pycache__|\.pyc$)" | grep . > /dev/null 2>&1; then
+          if git status --porcelain | \
+            grep -v -E "(\.egg-info|__pycache__|\.pyc$)" | \
+            grep . > /dev/null 2>&1; then
             echo "Files were modified during formatting. \
               Please run 'make format' locally."
-            git status --porcelain | grep -v -E "(\.egg-info|__pycache__|\.pyc$)"
+            git status --porcelain | \
+              grep -v -E "(\.egg-info|__pycache__|\.pyc$)"
             exit 1
           else
             echo "All files are properly formatted."
