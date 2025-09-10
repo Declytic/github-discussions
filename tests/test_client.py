@@ -150,12 +150,10 @@ class TestGitHubDiscussionsClient:
         assert mock_post.call_count == 4  # Initial + 3 retries
         assert mock_sleep.call_count == 3
 
-    @patch("github_discussions.client.requests.Session.post")
-    def test_get_rate_limit_status(self, mock_post, client):
+    @patch.object(GitHubDiscussionsClient, '_make_request')
+    def test_get_rate_limit_status(self, mock_make_request, client):
         """Test getting rate limit status."""
-        mock_response = Mock()
-        mock_response.status_code = 200
-        mock_response.json.return_value = {
+        mock_make_request.return_value = {
             "data": {
                 "rateLimit": {
                     "limit": 5000,
@@ -165,7 +163,6 @@ class TestGitHubDiscussionsClient:
                 }
             }
         }
-        mock_post.return_value = mock_response
 
         result = client.get_rate_limit_status()
 
@@ -200,12 +197,10 @@ class TestGitHubDiscussionsClient:
         # Session should be closed
         mock_session.close.assert_called_once()
 
-    @patch("github_discussions.client.requests.Session.post")
-    def test_get_discussions(self, mock_post, client):
+    @patch.object(GitHubDiscussionsClient, '_make_request')
+    def test_get_discussions(self, mock_make_request, client):
         """Test getting discussions."""
-        mock_response = Mock()
-        mock_response.status_code = 200
-        mock_response.json.return_value = {
+        mock_make_request.return_value = {
             "data": {
                 "repository": {
                     "discussions": {
@@ -247,7 +242,6 @@ class TestGitHubDiscussionsClient:
                 }
             }
         }
-        mock_post.return_value = mock_response
 
         discussions = client.get_discussions("owner", "repo")
 
@@ -260,12 +254,10 @@ class TestGitHubDiscussionsClient:
         assert discussion.category.name == "General"
         assert discussion.comments_count == 5
 
-    @patch("github_discussions.client.requests.Session.post")
-    def test_create_discussion(self, mock_post, client):
+    @patch.object(GitHubDiscussionsClient, '_make_request')
+    def test_create_discussion(self, mock_make_request, client):
         """Test creating a discussion."""
-        mock_response = Mock()
-        mock_response.status_code = 200
-        mock_response.json.return_value = {
+        mock_make_request.return_value = {
             "data": {
                 "createDiscussion": {
                     "discussion": {
@@ -291,7 +283,6 @@ class TestGitHubDiscussionsClient:
                 }
             }
         }
-        mock_post.return_value = mock_response
 
         discussion = client.create_discussion(
             repository_id="R_kgDOAHz1OX",
