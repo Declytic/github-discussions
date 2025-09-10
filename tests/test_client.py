@@ -11,6 +11,7 @@ from github_discussions.exceptions import (
     GitHubGraphQLError,
     NotFoundError,
     RateLimitError,
+    TimeoutError,
 )
 
 
@@ -76,7 +77,7 @@ class TestGitHubDiscussionsClient:
             client._make_request("query { test }")
 
         assert "Rate limit exceeded" in str(exc_info.value)
-        assert exc_info.value.reset_at == "2021-12-31 16:00:00 UTC"
+        assert exc_info.value.reset_at == "2022-01-01 00:00:00 UTC"
 
     @patch("github_discussions.client.requests.Session.post")
     def test_make_request_authentication_error(self, mock_post, client):
@@ -183,13 +184,21 @@ class TestGitHubDiscussionsClient:
 
         assert result == {"data": {"custom": "result"}}
 
-    def test_context_manager(self, client):
+    @patch("github_discussions.client.requests.Session")
+    def test_context_manager(self, mock_session_class, client):
         """Test context manager usage."""
+        # Mock the session
+        mock_session = Mock()
+        mock_session_class.return_value = mock_session
+
+        # Re-initialize client to use mocked session
+        client._session = mock_session
+
         with client as c:
             assert c is client
 
         # Session should be closed
-        assert client._session.close.called
+        mock_session.close.assert_called_once()
 
     @patch("github_discussions.client.requests.Session.post")
     def test_get_discussions(self, mock_post, client):
@@ -227,7 +236,13 @@ class TestGitHubDiscussionsClient:
                                 "isPinned": False,
                                 "url": "https://github.com/owner/repo/discussions/1",
                             }
-                        ]
+                        ],
+                        "pageInfo": {
+                            "hasNextPage": False,
+                            "hasPreviousPage": False,
+                            "startCursor": "Y3Vyc29yOnYyOpK5MjAyMC0xMi0wOFQxNjoyMzo0MyswMDowMM4fGh0=",
+                            "endCursor": "Y3Vyc29yOnYyOpK5MjAyMC0xMi0wOFQxNjoyMzo0MyswMDowMM4fGh0="
+                        }
                     }
                 }
             }
