@@ -44,7 +44,7 @@ jobs:
 
       - name: Lint with flake8
         run: |
-          flake8 github_discussions tests examples
+          flake8 --max-line-length=88 --extend-ignore=E203,W503 github_discussions tests examples
 
       - name: Type check with mypy
         run: |
@@ -101,10 +101,13 @@ jobs:
           rm -rf dist/
           rm -rf *.egg-info/
 
-          if [ -n "$(git status --porcelain)" ]; then
+          # Ensure egg-info is properly ignored
+          git status --porcelain | grep -v "\.egg-info" | grep -v "__pycache__" > /tmp/git_status_clean.txt
+
+          if [ -s /tmp/git_status_clean.txt ]; then
             echo "Files were modified during formatting. \
               Please run 'make format' locally."
-            git status --porcelain
+            cat /tmp/git_status_clean.txt
             exit 1
           else
             echo "All files are properly formatted."
