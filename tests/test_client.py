@@ -245,8 +245,8 @@ class TestGitHubDiscussionsClient:
 
         discussions = client.get_discussions("owner", "repo")
 
-        assert len(discussions) == 1
-        discussion = discussions[0]
+        assert len(discussions.discussions) == 1
+        discussion = discussions.discussions[0]
         assert discussion.id == "D_kwDOAHz1OX4uYAah"
         assert discussion.number == 1
         assert discussion.title == "Test Discussion"
