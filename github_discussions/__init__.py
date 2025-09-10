@@ -32,8 +32,12 @@ from .exceptions import (
 
 # Optional xAI integration - only available if dependencies are installed
 try:
-    from .xai_chat_integration import GitHubDiscussionsAssistant  # type: ignore[import-not-found]
-    from .xai_function_calling import setup_github_discussions_tools  # type: ignore[import-not-found]
+    from .xai_chat_integration import (
+        GitHubDiscussionsAssistant,  # type: ignore[import-not-found]
+    )
+    from .xai_function_calling import (
+        setup_github_discussions_tools,  # type: ignore[import-not-found]
+    )
 
     _XAI_AVAILABLE = True
 except ImportError:
