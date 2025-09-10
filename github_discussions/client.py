@@ -192,9 +192,7 @@ class GitHubDiscussionsClient(BaseGitHubDiscussionsClient):
         Returns:
             Discussion object
         """
-        import asyncio
-
-        return asyncio.run(super().get_discussion(owner, repo, number))
+        return super().get_discussion(owner, repo, number)
 
     def create_discussion(
         self,
