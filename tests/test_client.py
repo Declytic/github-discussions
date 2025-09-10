@@ -150,7 +150,7 @@ class TestGitHubDiscussionsClient:
         assert mock_post.call_count == 4  # Initial + 3 retries
         assert mock_sleep.call_count == 3
 
-    @patch.object(GitHubDiscussionsClient, '_make_request')
+    @patch.object(GitHubDiscussionsClient, "_make_request")
     def test_get_rate_limit_status(self, mock_make_request, client):
         """Test getting rate limit status."""
         mock_make_request.return_value = {
@@ -197,7 +197,7 @@ class TestGitHubDiscussionsClient:
         # Session should be closed
         mock_session.close.assert_called_once()
 
-    @patch.object(GitHubDiscussionsClient, '_make_request')
+    @patch.object(GitHubDiscussionsClient, "_make_request")
     def test_get_discussions(self, mock_make_request, client):
         """Test getting discussions."""
         mock_make_request.return_value = {
@@ -235,9 +235,11 @@ class TestGitHubDiscussionsClient:
                         "pageInfo": {
                             "hasNextPage": False,
                             "hasPreviousPage": False,
-                            "startCursor": "Y3Vyc29yOnYyOpK5MjAyMC0xMi0wOFQxNjoyMzo0MyswMDowMM4fGh0=",
-                            "endCursor": "Y3Vyc29yOnYyOpK5MjAyMC0xMi0wOFQxNjoyMzo0MyswMDowMM4fGh0="
-                        }
+                            "startCursor": "Y3Vyc29yOnYyOpK5MjAyMC0xMi0"
+                            "wOFQxNjoyMzo0MyswMDowMM4fGh0=",
+                            "endCursor": "Y3Vyc29yOnYyOpK5MjAyMC0xMi0wO"
+                            "FQxNjoyMzo0MyswMDowMM4fGh0=",
+                        },
                     }
                 }
             }
@@ -254,7 +256,7 @@ class TestGitHubDiscussionsClient:
         assert discussion.category.name == "General"
         assert discussion.comments_count == 5
 
-    @patch.object(GitHubDiscussionsClient, '_make_request')
+    @patch.object(GitHubDiscussionsClient, "_make_request")
     def test_create_discussion(self, mock_make_request, client):
         """Test creating a discussion."""
         mock_make_request.return_value = {
