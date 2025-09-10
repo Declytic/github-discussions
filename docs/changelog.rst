@@ -6,9 +6,38 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
-[Unreleased]
+[0.1.1] - 2025-09-09
 ------------
 
+Added
+~~~~~
+
+- X AI Integration
+
+Changed
+~~~~~~~
+
+- None
+
+
+Removed
+~~~~~~~
+
+- None
+
+
+Fixed
+~~~~~
+
+- None
+
+Security
+~~~~~~~~
+
+- None
+
+[0.1.0] - 2025-09-09
+------------
 Added
 ~~~~~
 
@@ -56,18 +85,3 @@ Security
 ~~~~~~~~
 
 - None
-
-[0.1.0] - 2025-09-09
----------------------
-
-Initial release with core functionality.
-
-Added
-~~~~~
-
-- Basic GitHub Discussions GraphQL API integration
-- Discussion and comment management
-- Authentication handling
-- Error handling framework
-- Initial documentation
-- Basic test coverage

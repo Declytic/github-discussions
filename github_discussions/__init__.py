@@ -4,7 +4,7 @@ A comprehensive Python package for interacting with GitHub Discussions
 using the GraphQL API.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __author__ = "Bill Schumacher"
 __email__ = "34168009+BillSchumacher@users.noreply.github.com"
 
