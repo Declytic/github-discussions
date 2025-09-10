@@ -30,6 +30,18 @@ from .exceptions import (
     ValidationError,
 )
 
+# Optional xAI integration - only available if dependencies are installed
+try:
+    from .xai_chat_integration import GitHubDiscussionsAssistant
+    from .xai_function_calling import setup_github_discussions_tools
+
+    _XAI_AVAILABLE = True
+except ImportError:
+    _XAI_AVAILABLE = False
+    setup_github_discussions_tools = None
+    GitHubDiscussionsAssistant = None
+
+# Build __all__ list conditionally
 __all__ = [
     "GitHubDiscussionsClient",
     "AsyncGitHubDiscussionsClient",
@@ -49,3 +61,12 @@ __all__ = [
     "NetworkError",
     "TimeoutError",
 ]
+
+# Add xAI functionality to __all__ if available
+if _XAI_AVAILABLE:
+    __all__.extend(
+        [
+            "setup_github_discussions_tools",
+            "GitHubDiscussionsAssistant",
+        ]
+    )
