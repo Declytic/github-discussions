@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -36,7 +36,7 @@ jobs:
           python-version: ${{ inputs.python_version || '3.11' }}
 
       - name: Cache pip dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: >-
@@ -99,21 +99,21 @@ jobs:
 
       - name: Upload build artifacts
         if: inputs.task == 'build'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist/
 
       - name: Upload coverage report
         if: inputs.task == 'test-cov'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: htmlcov/
 
       - name: Upload documentation
         if: inputs.task == 'docs'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: docs
           path: docs/_build/html/
